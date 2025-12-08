@@ -1,12 +1,41 @@
+.model small
+.stack 100h
+.data
 
-; You may customize this and other start-up templates; 
-; The location of this template is c:\emu8086\inc\0_com_template.txt
+newl db 10,13, "$" 
 
-org 100h
+.code 
+mov ax,@data
+mov ds,ax
 
-; add your code here
+mov cx,0
+ 
+while:
+mov ah,1
+int 21h
 
-ret
+cmp al,13
+je count_char
+
+inc cl
+jmp while
+
+count_char:
+mov ah,9
+lea dx,newl
+int 21h
+
+add cl,30h
+
+mov ah,2
+mov dl,cl
+int 21h
+jmp end 
+ 
+end:
+mov ah,4ch
+int 21h
+
 
 
 
